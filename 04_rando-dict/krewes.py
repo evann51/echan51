@@ -3,7 +3,7 @@
 # SoftDev
 #K04 -- Python dictionairies and random selection
 #2024-09-14
-#time spent:
+#time spent: .3 hours
 
 import random as r
 krewes = {

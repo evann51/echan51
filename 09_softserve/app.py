@@ -30,7 +30,7 @@ def hello_world():                    #defines new function
         for k in range(int(float(num) * 10)):
             dict.update({counter: name})
             counter += 1
-    return(dict[r.randint(1, 998)])
+    return("maje_stic \n"+dict[r.randint(1, 998)])
 
 app.debug = True        #sets debug to true
 app.run()       #runs app

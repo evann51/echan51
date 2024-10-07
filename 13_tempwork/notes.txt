@@ -1,0 +1,4 @@
+Notes:
+1. It becomes nice to manipulate a list of dictionaries in jinja with the model html as you can loop through each item in a combined list of dictionaries and access specific data with .[key]. This was a new function that I discovered which we haven't yet covered in class, but I found extremely useful for coding this assignment.
+2. I rewrote code from my csv parser functions in order to handle more columns and appropriately manipulate the data into a data structure/collection. This led to ripple changes to account for within flask and randomization integration.
+3. It also turns out the macOS likes to mess up my csv files, and I had to manually input all the data.

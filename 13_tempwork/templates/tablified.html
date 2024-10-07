@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+#Leon Huang, Evan Chan, Ethan Sie
+#The Grizzly Bears
+#SoftDev
+#K13 - Combine
+#2024-9-30
+#Time Spent: 2
+ -->
+
+<html>
+  <style>
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+th, td {
+  background-color: #96D4D4;
+}
+</style>
+  <head>
+    <title> {{ foo }} </title>
+  </head>
+<h1> Choosing a Job! </h1>
+
+  <h3>{{teamname}}</h3>
+  <h4>
+    {% for item in teamMembers %}
+       {{ item }} <br>
+    {% endfor %}
+  </h4>
+
+  <h5>
+    Here's a job you'd like: {{job}}
+  </h5>
+  <body>
+    <table>
+      <tr>
+        <th>Job</th>
+        <th>Percentage</th>
+        <th>Link</th>
+      </tr>
+      {% for item in combined_data %}
+      <tr>
+        <td>{{ item.job }}</td>
+        <td>{{ item.percentage }}%</td>
+        <td><a href="{{ item.link }}">{{ item.link }}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+
+</html>

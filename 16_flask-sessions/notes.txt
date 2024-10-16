@@ -1,0 +1,9 @@
+Plan:
+* import Flask, request, session
+* hard-code a dictionary with a preset username and password
+* on the Flask webpage, create three user entries for the username, password, and submit button
+* if the username and password are correct, load a new webpage
+* whenever initial page is loaded, attempt to fetch the cookie, and if it exists, load a new webpage
+
+DISCO:
+* from flask import redirect --> redirect(route) sends a user to the route

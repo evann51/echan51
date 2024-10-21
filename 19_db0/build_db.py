@@ -1,4 +1,4 @@
-# Evan Chan - The Flying Mice
+# Evan Chan, Jason Chao, Victor Casado - The Flying Mice
 #SoftDev
 #skeleton/stub :: SQLITE3 BASICS
 #Oct 20 2024

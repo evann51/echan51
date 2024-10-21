@@ -1,0 +1,56 @@
+/* 
+Jason Chao, Victor Casado, Evan Chan
+The Flying Mice
+SoftDev
+17 - CSS Mimicry
+2024 - 10 - 15
+Time spent: 1.5 hours 
+*/
+
+html {
+    background-color: #646464;
+    margin: 10px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+body {
+    background-color: #7f7f7f;
+    margin: 0;
+    margin-top: -0.5%;
+}
+
+#site-title {
+    background-color: #cbcbcb;
+    height: 60px;
+    position: top;
+    text-align: center;
+    color: white;
+}
+
+.nav, .text {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -2%;
+    padding: 0.5%;
+}
+#nav-title {
+    color: black;
+}
+h3 {
+    color: #d4d4d4;
+}
+.nav {
+    padding-right: 4%;
+}
+.text {
+    width: 85%;
+}
+
+#copyright {
+    padding: 7px;
+    font-size: 1.2em;
+    height: 35px;
+    color: #646464;
+    background-color: #4c4c4c;
+    text-align: right;
+}

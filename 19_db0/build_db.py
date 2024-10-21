@@ -1,7 +1,7 @@
-# Victor Casado - The Flying Mice
+# Evan Chan - The Flying Mice
 #SoftDev
 #skeleton/stub :: SQLITE3 BASICS
-#Oct 20 2024 
+#Oct 20 2024
 
 import sqlite3
 import csv
@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS students (
 with open('students.csv', newline="") as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        c.execute('INSERT OR IGNORE INTO students (id, name, age) VALUES (?, ?, ?)', 
+        c.execute('INSERT OR IGNORE INTO students (id, name, age) VALUES (?, ?, ?)',
                   (row['id'], row['name'], row['age']))
 
 # Ccreate 'courses' table if it doesn't exist
 c.execute('''
 CREATE TABLE IF NOT EXISTS courses (
-    student_id INTEGER,      -- links to the student's id in the 'students' table
+    id INTEGER,      -- links to the student's id in the 'students' table
     code TEXT,               -- 'code' represents the course name
     mark INTEGER,            -- 'mark' represents the student's grade
     FOREIGN KEY(student_id) REFERENCES students(id)  -- ensures that student_id exists in 'students' table
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS courses (
 with open('courses.csv', newline="") as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        c.execute('INSERT OR IGNORE INTO courses (student_id, code, mark) VALUES (?, ?, ?)', 
+        c.execute('INSERT OR IGNORE INTO courses (id, code, mark) VALUES (?, ?, ?)',
                   (row['id'], row['code'], row['mark']))
 
 # ==========================================================

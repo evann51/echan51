@@ -2,7 +2,7 @@
 import sqlite3 #enable SQLite operations
 
 #open db if exists, otherwise create
-db = sqlite3.connect("foo")
+db = sqlite3.connect("ugh.db")
 
 c = db.cursor() #facilitate db ops
 

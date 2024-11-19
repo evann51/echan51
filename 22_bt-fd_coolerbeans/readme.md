@@ -19,4 +19,4 @@
   - We consulted TopherShouldGetBraids to clarify how to get started with Foundation outside of downloading a zip
 
   q1 Only to be answered after you have finished... At this point, which FEF do you prefer, and why? Your answer to this Q should be the only portion of your submission that differs from that of your teammate.
-  - 
+  - I prefer BootStrap, I feel that it is more specific but still simple for a more polished look. Foundation seems like it requires a lot of code to create the bare minimum look.

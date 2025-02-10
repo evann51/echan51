@@ -17,7 +17,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             color: #202122;
             padding: 20px;
         }
@@ -36,6 +36,14 @@
             font-weight: 500;
         }
 
+        .subsubtitle {
+            font-family: Arial, sans-serif;
+            color: #202122;
+            margin: 20px 0 0 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
         .link {
             font-size: 18px;
             color: #3366cc;
@@ -44,7 +52,7 @@
         .mainContainer {
             max-width: 960px;
             margin: 0 auto;
-            padding: 20px;
+            padding-top: 20px;
             background-color: white;
         }
 
@@ -58,7 +66,7 @@
         .floating {
             width: 300px;
             padding: 10px;
-            background-color: #eef2f7;
+            background-color: #F8F9FA;
             border: 1px solid #ccc;
             margin: 10px 10px 10px 10px;
             font-size: 14px;
@@ -66,6 +74,8 @@
 
         .content {
             overflow: hidden;
+            margin: 10px 0 0 0;
+            line-height:26px;
         }
     </style>
 </head>
@@ -121,13 +131,37 @@
             </div>
         </div>
         <div class = "content">
-            TensorFlow is an free, open source software library specifically designed for training machine learning and artificial intelligence models.
+            <p>
+                <b>TensorFlow</b> is an free, open source software library specifically designed for training machine learning and artificial intelligence models. It supports deep learning, neural networks, and all sorts of machine learning models.
+            </p>
+            <p>
+                TensorFlow's scalability, performance, and industry usage make it a clear frontrunner for anything machine learning related. 
+            </p>
+            <p>
+                Its scalability allows for your models to be run easily in a variety of environments, from mobile devices to cloud-based distributed computing. Furthermore, adding onto TensorFlow's adoptability in so many contexts, its performance is not limited to one type of processing unit. Not only can TensorFlow utilize both CPUs and GPUs, but it's specialized for <a href="https://cloud.google.com/tpu" target="_blank">Tensor Processing Units (TPUs)</a>, units developed by Google specifically optimized for TensorFlow performance. 
+            </p>
+            <p>
+                Despite being initially developed for Google's internal use in 2011, today, TensorFlow has expanded beyond its original scope and is the key player behind many algorithms that power decision-making.
+            </p>
         </div>
         <br>
-        <div class = "subtitle">History</div>
+        <div class = "subtitle">Key Features</div>
         <hr style="color:white">
+        <div class = "subsubtitle">Keras</div>
         <div class = "content">
-            Initially engineered by the Google Brain team in 2011 for internal use, over the course of the next years, TensorFlow has become the key player behind the algorithms that power decision-making today.
+            Keras is a high-level API written in Python, designed to facilitate development and experimentation of deep learning models, making such tasks easier and more accessible. Integrated into TensorFlow, you can get the most out of TensorFlow's advanced features as well as Keras' simple interface. Keras' simplicity makes it an obvious choice for programmers starting out and real-world industries. And aimilarly to TensorFlow, it works well on CPUs, GPUs, and TPUs, adding to its versatility. Specifically, it is used by both researchers and companies for image recognition and language processing due to its ease of use combined with its strong performance.
+        </div>
+        <div class = "subsubtitle">TensorFlow with JavaScript</div>
+        <div class = "content">
+            TensorFlow allows users to run their machine learning models on-browser with their <a href="https://www.tensorflow.org/js" target="_blank">TensorFlow.js</a> JavaScript library. TensorFlow.js not only opens new opportunities for programmers more proficient in JavaScript but also provides a dedicated space to build and train models directly within the language.  But in case, it provides a simple and concise way to port your pretrained python ML models to JS models with just Node.js and Yarn <a href="https://www.tensorflow.org/js/tutorials#convert_pretained_models_to_tensorflowjs" target="_blank">here</a>. Additionally, TensorFlow adds to its already large toolbelt of customization with TensorFlow.js' ability to retrain pre-existing ML models using your own data, enabling even deeper experimentation and development.
+        </div>
+        <div class = "subsubtitle">LiteRT</div>
+        <div class = "content">
+            Previously known as TensorFlow Lite, <a href="https://ai.google.dev/edge/litert" target="_blank">Lite Runtime(LiteRT)</a> is Google's mobile library for iOS, Android, embedded Linux, and microcontrollers that allows for high-performance runtime for on-device AI. Users may utilize pre-made LiteRT models or port pre-existing models from other widely used machine learning frameworks like PyTorch, JAX, and TensorFlow itself. Addressing the limitations of mobile devices, LiteRT is centered around five key principles: latency, privacy, connectivity, size, and power consumption. Despite LiteRT running on more general-use devices, the library maintains a high performance accelerating AI specialized hardware like GPUs and the iOS Core ML.
+        </div>
+        <div class = "subsubtitle">TensorFlow Ecosystem</div>
+        <div class = "content">
+            TensorFlow's tools don't end at just the library itself. Extensive guides and tutorials are provided through every step of the way for new users that can be helpful to seasoned TensorFlowers. Built off this <a href="https://www.tensorflow.org/guide/basics" target="_blank">core framework</a>, new users can streamline their ML expertise with TensorFlow basics, community, and forum. Getting started, beginners can experiment with a variety of models at varying developmental depth from pre-made models by Google and the community at <a href="https://www.tensorflow.org/hub" target="_blank">TensorFlow hub</a> to research models still being developed in the <a href="https://www.tensorflow.org/guide/model_garden" target="_blank">Tensor Flow Model Garden</a>. And for programmers developing their own models, <a href="https://www.tensorflow.org/tensorboard" target="_blank">TensorBoard</a> and <a href="https://www.tensorflow.org/tfx/guide/tfma" target="_blank">Model Analysis</a> are immersive tools provided by TensorFlow to track development and improvement of your model.
         </div>
     </div>
 </body>

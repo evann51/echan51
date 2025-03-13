@@ -1,0 +1,23 @@
+<!-- create_post.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Add in the head section of your HTML templates -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Create Post</title>
+</head>
+<body>
+    <h2>Create Post</h2>
+    <form method="POST">
+        <p>
+            <textarea name="content" rows="10" cols="50"></textarea>
+        </p>
+        <p>
+            <input type="submit" value="Post">
+        </p>
+    </form>
+</body>
+</html>

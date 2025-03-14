@@ -3,24 +3,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-<!-- Add in the head section of your HTML templates -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
 <body>
     <h2>Login</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
+    <form method="POST" action="{{ url_for('login') }}">
         <p>
-            {{ form.username.label }}
-            {{ form.username(size=32) }}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" size="32" required>
         </p>
         <p>
-            {{ form.password.label }}
-            {{ form.password(size=32) }}
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" size="32" required>
         </p>
-        <p>{{ form.submit() }}</p>
+        <p>
+            <input type="submit" value="Login">
+        </p>
     </form>
 </body>
 </html>

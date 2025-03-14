@@ -11,7 +11,8 @@ posts = []
 
 @app.context_processor
 def inject_user():
-    return dict(current_user=session.get('username'))
+    current_user = {'is_authenticated': 'username' in session, 'username': session.get('username')}
+    return dict(current_user=current_user)
 
 @app.route('/')
 @app.route('/home')

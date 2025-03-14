@@ -1,87 +1,66 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from flask import Flask, render_template, redirect, url_for, request, session
+from datetime import datetime
+from jinja2 import Template
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
+# Simulated in-memory database
+users = {}
+posts = []
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and user.password == form.password.data:
-            login_user(user)
-            return redirect(url_for('home'))
-    return render_template('login.html', form=form)
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('home'))
+@app.context_processor
+def inject_user():
+    return dict(current_user=session.get('username'))
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', posts=posts)
 
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = users.get(username)
+        if user and user['password'] == password:
+            session['username'] = username
+            return redirect(url_for('home'))
+    return render_template('login.html')
 
-class PostForm(FlaskForm):
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
 @app.route('/create_post', methods=['GET', 'POST'])
-@login_required
 def create_post():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(content=form.content.data, author_id=current_user.id)
-        db.session.add(post)
-        db.session.commit()
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        content = request.form['content']
+        post = {
+            'content': content,
+            'author': session['username'],
+            'timestamp': datetime.utcnow()
+        }
+        posts.append(post)
         return redirect(url_for('home'))
-    return render_template('create_post.html', form=form)
+    return render_template('create_post.html')
 
 @app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
-@login_required
 def edit_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.author_id != current_user.id:
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    post = posts[post_id]
+    if post['author'] != session['username']:
         return redirect(url_for('home'))
-    form = PostForm()
-    if form.validate_on_submit():
-        post.content = form.content.data
-        db.session.commit()
+    if request.method == 'POST':
+        post['content'] = request.form['content']
+        post['timestamp'] = datetime.utcnow()
         return redirect(url_for('home'))
-    elif request.method == 'GET':
-        form.content.data = post.content
-    return render_template('create_post.html', form=form)
+    return render_template('edit_post.html', post=post)
+
+if __name__ == '__main__':
+    app.run(debug=True)

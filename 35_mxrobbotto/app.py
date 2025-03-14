@@ -30,6 +30,17 @@ def login():
             return redirect(url_for('home'))
     return render_template('login.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username not in users:
+            users[username] = {'password': password}
+            session['username'] = username
+            return redirect(url_for('home'))
+    return render_template('register.html')
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)

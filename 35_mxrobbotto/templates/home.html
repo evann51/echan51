@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Add in the head section of your HTML templates -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>Home</title>
 </head>
 <body>
@@ -13,6 +12,28 @@
     {% if current_user.is_authenticated %}
         <p>Hello, {{ current_user.username }}!</p>
         <a href="{{ url_for('logout') }}">Logout</a>
+        
+        <!-- Post creation form -->
+        <form method="POST" action="{{ url_for('create_post') }}">
+            <p>
+                <label for="content">New Post</label>
+                <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+            </p>
+            <p>
+                <input type="submit" value="Post">
+            </p>
+        </form>
+        
+        <!-- Display posts -->
+        <h2>Posts</h2>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <p>{{ post.content }}</p>
+                    <p><small>By {{ post.author }} on {{ post.timestamp }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
     {% else %}
         <a href="{{ url_for('login') }}">Login</a>
     {% endif %}

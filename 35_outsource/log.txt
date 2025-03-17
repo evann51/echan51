@@ -1,0 +1,47 @@
+im trying to make a python and flash webapp through my localhost. it will be a blog that users may login to post and reply to others.
+-> given base code
+
+"Can you help me recreate a blog website using HTML, CSS, and Python? The project should have the following features:
+
+    A user feed that displays all posts sorted by most recent at the top.
+    Functionality for logged-in users to view, create, and edit blog posts.
+    Use an SQLite database to store posts and user information.
+    Implement session management to reduce login friction.
+    Ensure the site has consistent templates and styling. Please provide detailed steps and code snippets for setting up and implementing these features."
+-> improved base code
+
+make a requirements.txt
+-> made requirements.txt
+
+the requirements.txt should only use flask jinja and datetime
+-> lessened modules used
+
+now change the app.py to match these modules accurately
+-> updated app.py to reflect less modules
+
+jinja2.exceptions.UndefinedError: 'current_user' is undefined
+-> fixed error
+
+jinja2.exceptions.UndefinedError: 'form' is undefined
+-> didnt fix error
+
+review the login template
+-> fixed error in previous message
+
+we will not use flask_wtf
+-> removed flask_wtf module
+
+logging in doesnt redirect to home page
+-> fixed redirecting
+
+how does loginc check user identities if theres no register page? make a register page that can be accessed from the login.html
+-> added register templates and code
+
+good job! now let me make posts on the home.html page
+-> posting enabled
+
+good job!
+-> improvements to everything
+
+
+

@@ -21,14 +21,15 @@
         //game logic stuffs
         var age;
         var name;
+        var story;
 
         //info stuffs
         var charts;
         var stats;
 
         //UI
-
-        var ageButton;
+        var ageButton = [0,0,"#0aad36"];
+        var storyBounds = [0,0];
 
 
         function startGame(){
@@ -89,6 +90,8 @@
 
             board.c.height = cHeight;
             board.c.width = cWidth;
+
+            ageButton = [cWidth*1/3,cHeight*0.80,ageButton[2]];
         }//resizeGameArea
 
         function display(){
@@ -111,31 +114,36 @@
             this.ctx.clearRect(0,0,cWidth/2,cHeight);
             fillRoundRect(0,0,cWidth*6/10,cHeight,cHeight/40);
 
-            //bottom ui+lifescreen
-            this.ctx.shadowColor = "#b52d2d";
+            //ui+lifescreen
+            this.ctx.shadowColor = "#b52d2d";//red shadow
             this.ctx.shadowBlur = 20;
             this.ctx.shadowOffsetX = 0;
-            this.ctx.shadowOffsetY = 0;
+            this.ctx.shadowOffsetY = 0;     
             this.ctx.fillStyle = "#f0f0f0";
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.08);
-            this.ctx.fillRect(15,cHeight*3/4,(cWidth*2/3)-30,cHeight*0.1);
-            this.ctx.fillRect(cWidth/20,0,(cWidth*2/3)-(cWidth/20)*2,cHeight);
-            this.ctx.shadowColor = "#949494"
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.08);
-            this.ctx.fillRect((cWidth*0.05)-7.5,cHeight*3/4,(cWidth*2/3)-(cWidth*0.1)+15,cHeight*0.1);
+
+            this.ctx.fillRect(15,cHeight*3/4,(cWidth*2/3)-30,cHeight*0.1);//red shadow from bottom ui on red bg
+            this.ctx.fillRect(15,cHeight*0.05,(cWidth*2/3)-30,cHeight*0.05,cHeight/40);//red shadow from top ui on red bg
+            this.ctx.fillRect(cWidth/20,0,(cWidth*2/3)-(cWidth/20)*2,cHeight);//white life screen with red shadow on red bg
             
+            this.ctx.shadowColor = "#949494";//lifescreen and shadows on lifescreen
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.08);
+            this.ctx.fillRect((cWidth*0.05)-7.5,cHeight*3/4,(cWidth*2/3)-(cWidth*0.1)+15,cHeight*0.1);
+            this.ctx.fillRect((cWidth*0.05)-10,cHeight*.05,(cWidth*2/3)-(cWidth*0.1)+20,cHeight*0.05);
             this.ctx.fillStyle = "#e3e3e3";
             this.ctx.shadowColor = 'rgba(0,0,0,0)';
+
+            this.ctx.fillRect(0,cHeight*.05,(cWidth*2/3),cHeight*0.05);
+            fillRoundRect(0,-.5,cWidth*(2/3)+0.005,cHeight*0.1,cHeight/40);
             this.ctx.fillRect(0,cHeight*6/8,cWidth*2/3,(cHeight*1/6));
             this.ctx.clearRect(0,cHeight*.8,cWidth*0.2,cHeight*.2);
             fillRoundRect(0,cHeight*6/8,cWidth*2/3,(cHeight*1/4)+1,cHeight/40);
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.08);
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.08);
             this.ctx.fillStyle = "#0aad36";
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.075);
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.075);
             this.ctx.fillStyle = "#e3e3e3";
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.073);
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.073);
             this.ctx.fillStyle = "#0aad36";
-            fillCircle(cWidth*1/3,cHeight*0.80,cWidth*0.070);
+            fillCircle(ageButton[0],ageButton[1],cWidth*0.070);
             this.ctx.fillStyle = "#e3e3e3";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
@@ -147,8 +155,6 @@
 
 
             displayCharts();
-
-            //console.log("e");
 
             this.ctx.restore();
         }//display
@@ -225,14 +231,6 @@
 
         }//Human
 
-        class Log{
-            constructor(){
-                this.log;
-            }//constructor
-
-            
-        }//Log
-
         //Helper Functions
         function fillRoundRect(x,y,w,l,r){
             this.ctx = board.context;
@@ -274,6 +272,48 @@
         function roundToNearestTenth(num) {
             return Math.round(num * 10)/10;
         }//roundToNearestTenth
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        // First, start by splitting all of our text into words, but splitting it into an array split by spaces
+        let words = text.split(' ');
+        let line = ''; // This will store the text of the current line
+        let testLine = ''; // This will store the text when we add a word, to test if it's too long
+        let lineArray = []; // This is an array of lines, which the function will return
+
+        // Lets iterate over each word
+        for(var n = 0; n < words.length; n++) {
+            // Create a test line, and measure it..
+            testLine += `${words[n]} `;
+            let metrics = ctx.measureText(testLine);
+            let testWidth = metrics.width;
+            // If the width of this test line is more than the max width
+            if (testWidth > maxWidth && n > 0) {
+                // Then the line is finished, push the current line into "lineArray"
+                lineArray.push([line, x, y]);
+                // Increase the line height, so a new line is started
+                y += lineHeight;
+                // Update line and test line to use this word as the first word on the next line
+                line = `${words[n]} `;
+                testLine = `${words[n]} `;
+            }
+            else {
+                // If the test line is still less than the max width, then add the word to the current line
+                line += `${words[n]} `;
+            }
+            // If we never reach the full max width, then there is only one line.. so push it into the lineArray so we return something
+            if(n === words.length - 1) {
+                lineArray.push([line, x, y]);
+            }
+        }
+        // Return the line array
+        return lineArray;
+    }//wrapText not by me...from the intertrash
+
+    function getDistance(x1, y1, x2, y2) {
+        const xDiff = x2 - x1;
+        const yDiff = y2 - y1;
+        return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    }//getDistance
     </script>
 
 </body>

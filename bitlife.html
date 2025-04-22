@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BitLife</title>
-    <style>
-      @import url('https://fonts.cdnfonts.com/css/avenir');
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body onload = startGame()>
 
@@ -25,17 +23,26 @@
         var age;
         var name;
         var story;
+        var dead;
 
         //info stuffs
         var charts;
         var stats;
 
         //UI
-        var ageButton = [0,0,"#0aad36"];
+        var ageButton = [0,0,"#0aad36"];//x,y,color
         var storyBounds = [0,0];
 
+        //data work
+        var deathRates
+
+        function setupData(){
+            deathRates = [0.0002,0.00021111111111111112,0.00022222222222222223,0.00023333333333333335,0.00024444444444444444,0.0002555555555555556,0.00026666666666666665,0.0002777777777777778,0.0002888888888888889,0.0003,0.00033,0.00036,0.00039,0.00042,0.00045,0.00048,0.00051,0.00054,0.00057,0.0006,0.0006666666666666666,0.0007333333333333333,0.0008,0.0008666666666666666,0.0009333333333333333,0.001,0.0010666666666666666,0.0011333333333333334,0.0012,0.0012666666666666668,0.0013333333333333335,0.0014,0.0014666666666666666,0.0015333333333333334,0.0016,0.0016666666666666668,0.0017333333333333332,0.0018,0.0018666666666666668,0.0019333333333333335,0.002,0.0022,0.0024,0.0026,0.0028,0.003,0.0032,0.00356,0.00392,0.00428,0.00464,0.005,0.00536,0.00572,0.00608,0.00644,0.0068,0.00768,0.00856,0.00944,0.01032,0.0112,0.01208,0.01296,0.01384,0.01472,0.0156,0.01884,0.02208,0.02532,0.02856,0.0318,0.03504,0.03828,0.04152,0.04476,0.048,0.0532,0.0584,0.0636,0.0688,0.074,0.0792,0.0844,0.0896,0.0948,0.1,0.11176470588235294,0.12352941176470588,0.13529411764705882,0.14705882352941177,0.1588235294117647,0.17058823529411765,0.18235294117647058,0.19411764705882352,0.20588235294117646,0.21764705882352942,0.22941176470588234,0.2411764705882353,0.2529411764705882,0.2647058823529412,0.27647058823529413,0.28823529411764703,0.29999999999999993];
+
+        }//setupData
 
         function startGame(){
+            setupData();
             resetGame();
 
             board.start();
@@ -44,10 +51,13 @@
         function resetGame(){
             age = 0;
             frameCount = 0;
+            dead = false;
+            name = "Evan Chan";
+            story = [];
 
             charts = [];
             charts.length = 2;
-            charts[0] = new Chart('Survival', 72.9);
+            charts[0] = new Chart('Survival', 100-deathRates[age]);
             charts[1] = new Chart('Poopy', 14.3)
 
 
@@ -134,6 +144,7 @@
             this.ctx.fillRect((cWidth*0.05)-10,cHeight*.05,(cWidth*2/3)-(cWidth*0.1)+20,cHeight*0.05);
             this.ctx.fillStyle = "#e3e3e3";
             this.ctx.shadowColor = 'rgba(0,0,0,0)';
+            
 
             this.ctx.fillRect(0,cHeight*.05,(cWidth*2/3),cHeight*0.05);
             fillRoundRect(0,-.5,cWidth*(2/3)+0.005,cHeight*0.1,cHeight/40);
@@ -150,12 +161,27 @@
             this.ctx.fillStyle = "#e3e3e3";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
-            this.ctx.font = cHeight/25 + "px Avenir medium";
+            this.ctx.font = "800 "+ cHeight/25 + "px Nunito";
             this.ctx.fillText("Age",cWidth*1/3,cHeight*0.87);
             fillRoundRect((cWidth*1/3)-(cWidth*0.0070)/2,cHeight*0.70,cWidth*0.0070,cHeight*0.13,cHeight/40);
             fillRoundRect((cWidth*1/3)-(cHeight*0.13)/2,cHeight*0.76,(cHeight*0.13),(cWidth*0.0070),cHeight/40);
 
+            this.ctx.fillStyle = "#03041a";
+            this.ctx.textAlign = "left";
+            this.ctx.textBaseline = "middle";
+            this.fontSize = cWidth/60;
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
+            this.ctx.fillText(name,cWidth/30,cHeight/25);
+            this.fontSize = cWidth/70;
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
+            this.ctx.fillText("Age: "+age,cWidth/30,1.75*cHeight/25)
 
+
+
+            if(dead){
+                this.ctx.fillStyle = 'rgba(153, 42, 32, 50)';
+                fillRoundRect(0,0,cWidth*2/3,cHeight,cHeight/40);
+            }
 
             displayCharts();
 
@@ -170,12 +196,12 @@
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
             this.fontSize = cWidth/40;
-            this.ctx.font = fontSize+'px Avenir medium';
+            this.ctx.font = "650 "+ fontSize+'px Nunito';
             this.ctx.fillText("Stats",cWidth*5/6,cHeight*1/10);
 
             this.ctx.textAlign = "right";
             this.fontSize = cWidth/70;
-            this.ctx.font = fontSize+'px Avenir medium';
+            this.ctx.font = "800 "+ fontSize+'px Nunito';
             for(i = 0;i<charts.length;i++){
                 if(frameCount%1==0){
                     charts[i].updateStat();
@@ -186,6 +212,36 @@
                 charts[i].display(x,y,this.fontSize*2);
             }
         }//displayCharts
+
+        function displayStory(){
+            this.sx;
+            this.sy;
+            
+        }//displayStory
+
+        function ageUp(){
+            age++;
+
+            if(age<100){
+                charts[0].changeStat(100-(deathRates[age]*100));
+            }
+
+            let d = 1000-(charts[0].stat*10);
+            let n = getRandomInt(0,1000);
+            console.log(n,d);
+            if(n<d){
+                dead = true;
+            }
+
+            if(dead!=true){
+                this.recap = [];
+                this.recap.push("Age "+age);
+                if(age == 1){
+                    this.recap.push(name + " was born!")
+                }
+                story.push(this.recap);
+            }
+        }//ageUp
 
         class Chart{
             constructor(name, stat){
@@ -198,7 +254,7 @@
                 this.ctx = board.context;
                 this.ctx.fillStyle = "#03041a";
                 this.ctx.textAlign = "right";
-                this.ctx.font = sp/2 + "px Avenir medium";
+                this.ctx.font = "800 "+ sp/2 + "px Nunito";
                 this.ctx.fillText(this.name,x,y);
 
                 this.ctx.fillStyle = "#dedede";
@@ -235,17 +291,25 @@
         }//Human
 
         board.c.addEventListener('mousemove', (event) => {
-          const rCanvas = board.c.getBoundingClientRect();
-          const mouseX = event.clientX - rCanvas.left;
-          const mouseY = event.clientY - rCanvas.top;
-          if (getDistance(ageButton[0],ageButton[1],mouseX,mouseY)<cHeight*0.07*2){
-            ageButton[2] = "#45b54a";
-          }
-          else{
-            ageButton[2] = "#0aad36";
-          }
-
+            const rCanvas = board.c.getBoundingClientRect();
+            const mouseX = event.clientX - rCanvas.left;
+            const mouseY = event.clientY - rCanvas.top;
+            if (dead == false && getDistance(ageButton[0],ageButton[1],mouseX,mouseY)<cHeight*0.07*2){
+                ageButton[2] = "#45b54a";
+            }
+            else{
+                ageButton[2] = "#0aad36";
+            }
         });//mouse hovering
+
+        board.c.addEventListener('click', (event) => {
+            const rCanvas = board.c.getBoundingClientRect();
+            const mouseX = event.clientX - rCanvas.left;
+            const mouseY = event.clientY - rCanvas.top;
+            if (dead == false && getDistance(ageButton[0],ageButton[1],mouseX,mouseY)<cHeight*0.07*2){
+                ageUp();
+            }
+        });//mouse click
 
         //Helper Functions
         function fillRoundRect(x,y,w,l,r){
